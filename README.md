@@ -493,6 +493,24 @@ DELETE /api/emails/{emailId}
 GET /api/emails/{emailId}/{messageId}
 ```
 
+#### Extract Primary Invite Link
+```http
+GET /api/emails/{emailId}/{messageId}/links
+```
+
+Use this endpoint to extract the primary action link from a message body. It prioritizes links such as `Join workspace` or `accept invitation`, and filters out help center, support, and footer links.
+
+Example response:
+```json
+{
+  "inviteLink": "https://chatgpt.com/...",
+  "links": [
+    "https://chatgpt.com/..."
+  ],
+  "total": 1
+}
+```
+
 #### Create Email Share Link
 ```http
 POST /api/emails/{emailId}/share

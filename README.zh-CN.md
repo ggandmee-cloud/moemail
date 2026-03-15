@@ -582,6 +582,34 @@ GET /api/emails/{emailId}/{messageId}
 - `html`: 邮件HTML内容
 - `received_at`: 接收时间（时间戳）
 
+#### 提取邮件主邀请链接
+```http
+GET /api/emails/{emailId}/{messageId}/links
+```
+参数说明：
+- `emailId`: 邮箱的唯一标识符，必填
+- `messageId`: 邮件的唯一标识符，必填
+
+用途说明：
+- 用于从邮件 HTML/纯文本中提取主操作邀请链接
+- 优先匹配类似 `Join workspace`、`accept invitation` 的链接
+- 会自动过滤帮助中心、支持页、`contact us` 等非目标链接
+
+返回响应：
+```json
+{
+  "inviteLink": "https://chatgpt.com/...",
+  "links": [
+    "https://chatgpt.com/..."
+  ],
+  "total": 1
+}
+```
+响应字段说明：
+- `inviteLink`: 优先级最高的主邀请链接，没有命中时为 `null`
+- `links`: 筛选后的候选链接列表，按优先级排序
+- `total`: 候选链接数量
+
 #### 创建邮箱分享链接
 ```http
 POST /api/emails/{emailId}/share
